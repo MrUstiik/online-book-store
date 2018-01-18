@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Регістрація</title>
+    <script src="/js/jquery.js" th:src="@{/js/jquery.js}"></script>
+    <script src="/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>
+    <script src="/js/validator.js" th:src="@{/js/validator.js}"></script>
+    <link rel="stylesheet" href="/css/bootstrap.css" th:href="@{/css/bootstrap.css}"/>
+</head>
+<body>
+
+<div th:fragment="author">
+    <form class="form-vertical" data-toggle="validator" role="form" action="#" th:action="@{/admin/add/author}"
+          th:object="${author}" method="post" enctype="multipart/form-data">
+
+        <div class="form-group">
+            <input class="form-control" type="hidden"
+                   th:field="*{authorId}"/>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Ім'я</label>
+            <div class="col-sm-10">
+                <input class="form-control" type="text" placeholder="Введіть ім'я автора"
+                       required="required" th:field="*{firstName}"/>
+                <div class="help-block with-errors"></div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Прізвище</label>
+            <div class="col-sm-10">
+                <input class="form-control" type="text" placeholder="Введіть прізвище автора"
+                       required="required" th:field="*{lastName}"/>
+                <div class="help-block with-errors"></div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">По-батькові</label>
+            <div class="col-sm-10">
+                <input class="form-control" type="text" placeholder="Введіть батьківське ім'я автора"
+                       required="required" th:field="*{patronymic}"/>
+                <div class="help-block with-errors"></div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Країна</label>
+            <div class="col-sm-10">
+                <input class="form-control" type="text" placeholder="Введіть країну автора"
+                       required="required" th:field="*{country}"/>
+                <div class="help-block with-errors"></div>
+            </div>
+        </div>
+
+        <label class="btn btn-default btn-file">
+            оберіть зображення<input type="file" style="display: none;" name="image"/>
+        </label>
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Внести зміни</button>
+        </div>
+    </form>
+</div>
+
+<div th:fragment="genre">
+    <form class="form-vertical" data-toggle="validator" role="form" action="#" th:action="@{/admin/add/genre}"
+          th:object="${genre}" method="post">
+
+        <div class="form-group">
+            <input class="form-control" type="hidden"
+                   th:field="*{genreId}"/>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Назва</label>
+            <div class="col-sm-10">
+                <input class="form-control" type="text" placeholder="Введіть назву жанра"
+                       required="required" th:field="*{title}"/>
+                <div class="help-block with-errors"></div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Опис</label>
+            <div class="col-sm-10">
+                <input class="form-control" type="text" placeholder="Введіть опис жанра"
+                       required="required" th:field="*{description}"/>
+                <div class="help-block with-errors"></div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Зберегти</button>
+        </div>
+    </form>
+</div>
+
+<div th:fragment="book">
+    <form class="form-vertical" data-toggle="validator" role="form" action="#" th:action="@{/admin/add/book}"
+          th:object="${book}" method="post" enctype="multipart/form-data">
+
+        <div class="form-group">
+            <input class="form-control" type="hidden"
+                   th:field="*{bookId}"/>
+        </div>
+        <div class="col-sm-8 col-sm-offset-2">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Назва</label>
+                <input class="form-control" type="text" placeholder="Введіть назву книги"
+                       required="required" th:field="*{title}"/>
+                <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Опис</label>
+                <textarea class="form-control" type="text" placeholder="Введіть опис книги"
+                          required="required" th:field="*{description}" maxlength="600" minlength="30"
+                          style="height: 150px"/>
+                <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Рік видачі</label>
+                <input class="form-control" type="number" placeholder="Введіть рік видачі книги" required="required"
+                       min="1000" max="2017" th:field="*{yearOfPublication}"/>
+                <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Ціна</label>
+                <input class="form-control" type="number" placeholder="Введіть ціну книги"
+                       required="required" th:field="*{price}" min="0" max="5000" />
+                <div class="help-block with-errors"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="sel2">Видавництво</label>
+                <select th:field="*{publisherTitle}" class="form-control" id="sel2" required="required">
+                    <option th:each="publisher : ${publishers}"
+                            th:value="${publisher.title}"
+                            th:text="${publisher.title}"></option>
+                </select>
+            </div>
+
+            <label class="btn btn-default btn-file">
+                оберіть зображення<input type="file" style="display: none;" name="image"/>
+            </label>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Внести зміни</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div th:fragment="publisher">
+    <form class="form-vertical" data-toggle="validator" role="form" action="#" th:action="@{/admin/add/publisher}"
+          th:object="${publisher}" method="post">
+
+        <div class="form-group">
+            <input class="form-control" type="hidden"
+                   th:field="*{publisherId}"/>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Назва</label>
+            <div class="col-sm-10">
+                <input class="form-control" type="text" placeholder="Введіть назву видавництва"
+                       required="required" th:field="*{title}"/>
+                <div class="help-block with-errors"></div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Сайт</label>
+            <div class="col-sm-10">
+                <input class="form-control" type="text" placeholder="Введіть сайт видавництва"
+                       required="required" th:field="*{site}"/>
+                <div class="help-block with-errors"></div>
+            </div>
+        </div>
+
+        <br/>
+        <h4><strong>Адреса: </strong></h4>
+
+        <div class="form-group">
+            <label class="cols-sm-2 control-label">Країна</label>
+            <div class="cols-sm-10">
+                <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-lock"
+                                                                   aria-hidden="true"></i></span>
+                    <input type="text" th:field="*{address.country}" class="form-control"
+                           placeholder="Введіть країну проживання"/>
+
+                </div>
+                <div class="help-block with-errors"></div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="cols-sm-2 control-label">Регіон(область)</label>
+            <div class="cols-sm-10">
+                <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-lock"
+                                                                   aria-hidden="true"></i></span>
+                    <input type="text" th:field="*{address.region}" class="form-control"
+                           placeholder="Введіть регіон проживання"/>
+
+                </div>
+                <div class="help-block with-errors"></div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="cols-sm-2 control-label">Населений пункт</label>
+            <div class="cols-sm-10">
+                <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-lock"
+                                                                   aria-hidden="true"></i></span>
+                    <input type="text" th:field="*{address.city}" class="form-control"
+                           placeholder="Введіть населений пункт"/>
+
+                </div>
+                <div class="help-block with-errors"></div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="cols-sm-2 control-label">Вулиця</label>
+            <div class="cols-sm-10">
+                <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-lock"
+                                                                   aria-hidden="true"></i></span>
+                    <input type="text" th:field="*{address.street}" class="form-control"
+                           placeholder="Введіть вулицю"/>
+
+                </div>
+                <div class="help-block with-errors"></div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="cols-sm-2 control-label">Будинок</label>
+            <div class="cols-sm-10">
+                <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-lock"
+                                                                   aria-hidden="true"></i></span>
+                    <input type="text" th:field="*{address.house}" class="form-control"
+                           placeholder="Введіть номер дому"/>
+
+                </div>
+                <div class="help-block with-errors"></div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Зберегти</button>
+        </div>
+    </form>
+</div>
+
+
+</body>
+</html>

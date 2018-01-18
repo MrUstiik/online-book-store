@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8"/>
+    <title>Автор</title>
+    <meta name="viewport" content="width=device-width, initial-scale=2"/>
+    <script src="/public/js/jquery.js" th:src="@{/js/jquery.js}"></script>
+    <script src="/public/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>
+    <script src="/public/js/validator.js" th:src="@{/js/validator.js}"></script>
+    <link rel="stylesheet" href="/public/css/bootstrap.css" th:href="@{/css/bootstrap.css}"/>
+    <link rel="icon" href="/public/img/icon.ico" th:href="@{/img/icon.ico}"/>
+    <style>
+        .navbar {
+            margin-bottom: 10px;
+            border-radius: 0;
+        }
+        .jumbotron {
+            margin-bottom: 0;
+        }
+    </style>
+
+</head>
+<body>
+
+<header th:replace="layout :: header"></header>
+
+<div th:replace="layout :: nav"></div>
+
+<div class="container">
+
+    <!--<h3><strong>Автор: </strong></h3>-->
+    <!--<h4 th:text="${author.firstName} + ' ' +  ${author.lastName}" id="firstName"></h4>-->
+
+
+    <!--<h3><strong>Книги:</strong></h3>-->
+    <!--<div class="col-lg-4">-->
+        <!--<div class="list-group">-->
+            <!--<th:block th:each="book:${author.books}">-->
+                <!--<a th:href="@{/details/book(bookId = ${book.bookId})}" class="list-group-item"-->
+                   <!--th:text="${book.title}"></a>-->
+            <!--</th:block>-->
+        <!--</div>-->
+    <!--</div>-->
+
+    <div class="bottom-right">
+        <div class="col-lg-5 text-center">
+            <img th:src="@{/img/author/{id}.jpg(id = ${author.authorId})}" style="width: 400px;"/>
+
+        </div>
+        <div class="col-lg-7">
+            <h4><strong>Прізвище: </strong></h4>
+            <h4 th:text="${author.lastName}"></h4>
+            <br/>
+            <h4><strong>Ім'я: </strong></h4>
+            <h4 th:text="${author.firstName}"></h4>
+            <br/>
+            <h4><strong>По-батькові: </strong></h4>
+            <h4 th:text="${author.patronymic}"></h4>
+            <br/>
+            <h4><strong>Країна: </strong></h4>
+            <h4 th:text="${author.country}"></h4>
+            <br/>
+            <h4><strong>Книжки: </strong></h4>
+            <th:block th:each="book : ${author.books}">
+                <a th:href="@{/details/book (bookId = ${book.bookId})}">
+                    <button type="button" class="btn btn-default" th:text="${book.title}"></button>
+                </a>
+                <br/>
+            </th:block>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

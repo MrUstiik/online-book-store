@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8"/>
+    <title>Книги</title>
+    <meta name="viewport" content="width=device-width, initial-scale=2"/>
+    <script src="/public/js/jquery.js" th:src="@{/js/jquery.js}"></script>
+    <script src="/public/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>
+    <script src="/public/js/validator.js" th:src="@{/js/validator.js}"></script>
+    <link rel="stylesheet" href="/public/css/bootstrap.css" th:href="@{/css/bootstrap.css}"/>
+    <link rel="icon" href="/public/img/icon.ico" th:href="@{/img/icon.ico}"/>
+    <style>
+        .navbar {
+            margin-bottom: 10px;
+            border-radius: 0;
+        }
+
+        .jumbotron {
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+
+<header th:replace="layout :: header"></header>
+
+<div th:replace="layout :: nav"></div>
+
+<div class="container">
+    <div class="bottom-right">
+        <div class="col-lg-5 text-center">
+            <img th:src="@{/img/book/{id}.jpg(id = ${book.bookId})}" style="width: 400px;"/>
+
+        </div>
+        <div class="col-lg-7">
+            <h4><strong>Назва: </strong></h4>
+            <h4 th:text="${book.title}"></h4>
+            <br/>
+            <h4><strong>Опис: </strong></h4>
+            <h4 th:text="${book.description}"></h4>
+            <br/>
+            <h4><strong>Рік друку:</strong></h4>
+            <h4 th:text="${book.yearOfPublication}"></h4>
+            <br/>
+            <h4><strong>Ціна:</strong></h4>
+            <h4 th:text="${book.price} + ' грн.'"></h4>
+            <br/>
+            <h4><strong>Категорія:</strong></h4>
+            <h4 th:text="${book.category.title}"></h4>
+            <br/>
+            <h4><strong>Видавництво:</strong></h4>
+            <a th:href="@{/details/publisher(publisherId = ${book.publisher.publisherId})}"
+               th:text="${book.publisher.title}"></a>
+            <br/>
+            <h4><strong>Жанри: </strong></h4>
+            <th:block th:each="genre : ${book.genres}">
+                <a th:href="@{/details/genre(genreId = ${genre.genreId})}"
+                   th:text="${genre.title}"></a>
+            </th:block>
+            <h4><strong>Автори: </strong></h4>
+            <th:block th:each="author : ${book.authors}">
+                <a th:href="@{/details/author (authorId = ${author.authorId})}"
+                   th:text="${author.firstName} +' '+ ${author.lastName}"></a>
+                <br/>
+            </th:block>
+            <br/>
+            <a th:href="@{/add_book_to_order (bookId = ${book.bookId})}">
+                <button type="button" class="btn btn-default">Купити</button>
+            </a>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

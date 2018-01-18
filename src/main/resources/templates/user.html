@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8"/>
+    <title>Особистий кабінет</title>
+    <meta name="viewport" content="width=device-width, initial-scale=2"/>
+    <script src="/public/js/jquery.js" th:src="@{/js/jquery.js}"></script>
+    <script src="/public/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>
+    <script src="/public/js/validator.js" th:src="@{/js/validator.js}"></script>
+    <link rel="stylesheet" href="/public/css/bootstrap.css" th:href="@{/css/bootstrap.css}"/>
+    <link rel="icon" href="/public/img/icon.ico" th:href="@{/img/icon.ico}"/>
+    <style>
+        .navbar {
+            margin-bottom: 10px;
+            border-radius: 0;
+        }
+        .jumbotron {
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+
+<header th:replace="layout :: header"></header>
+
+<div th:replace="layout :: nav"></div>
+
+<div class="container">
+    <div class="bottom-left">
+        <div class="col-sm-4">
+            <h4><strong>Логін:</strong></h4>
+            <h4 th:text="${user.username}"></h4>
+            <br/>
+            <h4><strong>Ім'я: </strong></h4>
+            <h4 th:text="${user.firstName}"></h4>
+            <br/>
+            <h4><strong>Прізвище: </strong></h4>
+            <h4 th:text="${user.lastName}"></h4>
+            <br/>
+            <h4><strong>Телефон:</strong></h4>
+            <h4 th:text="${user.telephone}"></h4>
+            <br/>
+            <h4><strong>E-Mail:</strong></h4>
+            <h4 th:text="${user.eMail}"></h4>
+            <br/>
+        </div>
+        <div class="col-sm-8">
+            <h4>Замовлення: </h4>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Дата</th>
+                    <th>Вартість</th>
+                    <th>Статус</th>
+                    <th>Книжки</th>
+                </tr>
+                </thead>
+                <tr th:each="order : ${user.orders}">
+                    <tbody>
+                    <td th:text="${order.date}"></td>
+                    <td th:text="${order.amount}"></td>
+                    <td th:text="${order.status}"></td>
+                    <td>
+                        <a th:href="@{/details/order (orderId = ${order.orderId})}">
+                            <button type="button" class="btn btn-default">Книги</button>
+                        </a>
+                    </td>
+                    </tbody>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

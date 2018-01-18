@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8"/>
+    <title>Жанр</title>
+    <meta name="viewport" content="width=device-width, initial-scale=2"/>
+    <script src="/public/js/jquery.js" th:src="@{/js/jquery.js}"></script>
+    <script src="/public/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>
+    <script src="/public/js/validator.js" th:src="@{/js/validator.js}"></script>
+    <link rel="stylesheet" href="/public/css/bootstrap.css" th:href="@{/css/bootstrap.css}"/>
+    <link rel="icon" href="/public/img/icon.ico" th:href="@{/img/icon.ico}"/>
+    <style>
+        .navbar {
+            margin-bottom: 10px;
+            border-radius: 0;
+        }
+        .jumbotron {
+            margin-bottom: 0;
+        }
+    </style>
+
+</head>
+<body>
+
+<header th:replace="layout :: header"></header>
+
+<div th:replace="layout :: nav"></div>
+
+<div class="container">
+
+    <h3><strong>Жанр: </strong></h3>
+    <h4 th:text="${genre.title}" id="title"></h4>
+
+    <h3><strong>Опис: </strong></h3>
+    <h4 th:text="${genre.description}" id="description"></h4>
+
+    <h3><strong>Книги:</strong></h3>
+    <div class="col-lg-4">
+        <div class="list-group">
+            <th:block th:each="book:${genre.books}">
+                <a th:href="@{/details/book (bookId = ${book.bookId})}">
+                    <button type="button" class="btn btn-default" th:text="${book.title}"></button>
+                </a>
+                <br/>
+            </th:block>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

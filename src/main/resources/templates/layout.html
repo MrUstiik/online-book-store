@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:fragment="head">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=2"/>
+    <script src="/public/js/jquery.js" th:src="@{/js/jquery.js}"></script>
+    <script src="/public/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>
+    <script src="/public/js/validator.js" th:src="@{/js/validator.js}"></script>
+    <link rel="stylesheet" href="/public/css/bootstrap.css" th:href="@{/css/bootstrap.css}"/>
+    <link rel="icon" href="/public/img/icon.ico" th:href="@{/img/icon.ico}"/>
+    <style>
+        .navbar {
+            margin-bottom: 10px;
+            border-radius: 0;
+        }
+        .jumbotron {
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+
+<div th:fragment="header" class="jumbotron">
+    <div class="container text-center">
+        <h3 style="font-size: 75px !important;">Книжковий інтернет-магазин</h3>
+    </div>
+</div>
+
+<nav th:fragment="nav" class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/" th:href="@{/}">Головна</a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li><a href="book.html" th:href="@{/book}">Книжки</a></li>
+                <li><a href="author.html" th:href="@{/author}"> Автори</a></li>
+                <li><a href="genre.html" th:href="@{/genre}">Жанри</a></li>
+                <li><a href="publisher.html" th:href="@{/publisher}">Видавництва</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li sec:authorize="isAuthenticated()"><a th:href="@{/user}"><span
+                        class="glyphicon glyphicon-user"></span>Ваш акаунт</a></li>
+                <li sec:authorize="isAuthenticated()">
+                    <form id="logoutForm" method="post" th:action="@{/logout}">
+                        <input type="hidden" th:value="${_csrf.getToken()}" th:name="${_csrf.parameterName }"/>
+                    </form>
+                    <a onclick="document.forms['logoutForm'].submit()" style="cursor: pointer"><span
+                            class="glyphicon glyphicon-log-out"
+                    ></span> Вихід</a>
+                </li>
+                <li sec:authorize="isAnonymous()"><a th:href="@{/login}"><span class="glyphicon glyphicon-user"></span>
+                    Увійти</a></li>
+                <li sec:authorize="isAnonymous()"><a th:href="@{/registration}"><span
+                        class="glyphicon glyphicon-user"></span> Реєстрація</a></li>
+                <li sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/admin/}"><span
+                        class="glyphicon glyphicon-user"></span> admin panel</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+</body>
+</html>
